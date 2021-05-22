@@ -1,6 +1,8 @@
+import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.metrics import auc
 
+matplotlib.use('Agg')
 
 def plot_roc_lfw(false_positive_rate, true_positive_rate, figure_name="roc.png"):
     """Plots the Receiver Operating Characteristic (ROC) curve.
