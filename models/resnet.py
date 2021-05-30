@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch
 from torch.nn import functional as F
 from .utils_resnet import resnet18, resnet34, resnet50, resnet101, resnet152
 
@@ -164,7 +165,7 @@ class Resnet18EBPTriplet(nn.Module):
 
     def __init__(self, embedding_dimension=512, pretrained=False):
         super(Resnet18EBPTriplet, self).__init__()
-        self.model = resnet18(pretrained=pretrained, in_channels=4)
+        self.model = resnet18(pretrained=pretrained, in_channels=6)
 
         # Output embedding
         input_features_fc_layer = self.model.fc.in_features
