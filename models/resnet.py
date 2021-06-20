@@ -27,6 +27,7 @@ class Resnet18Triplet(nn.Module):
 
     def forward(self, images):
         """Forward pass to output the embedding vector (feature vector) after l2-normalization."""
+        images = images[:, :3, :, :]
         embedding = self.model(images)
         # From: https://github.com/timesler/facenet-pytorch/blob/master/models/inception_resnet_v1.py#L301
         embedding = F.normalize(embedding, p=2, dim=1)
