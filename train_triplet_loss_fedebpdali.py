@@ -54,8 +54,8 @@ parser.add_argument('--clients', default=10, type=int,
 parser.add_argument('--iterations_per_epoch', default=10000, type=int,
                     help="Number of training iterations per epoch (default: 10000)"
                     )
-parser.add_argument('--model_architecture', type=str, default="resnet18", choices=["resnet18", "resnet18ebp", "resnet34", "resnet50", "resnet101", "resnet152", "inceptionresnetv2", "mobilenetv2"],
-                    help="The required model architecture for training: ('resnet18', 'resnet18ebp', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'inceptionresnetv2', 'mobilenetv2'), (default: 'resnet18')"
+parser.add_argument('--model_architecture', type=str, default="resnet18", choices=["resnet18", "resnet18ebp", "resnet18cbamebp", "resnet34", "resnet50", "resnet101", "resnet152", "inceptionresnetv2", "mobilenetv2"],
+                    help="The required model architecture for training: ('resnet18', 'resnet18ebp', 'resnet18cbamebp', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'inceptionresnetv2', 'mobilenetv2'), (default: 'resnet18')"
                     )
 parser.add_argument('--pretrained', default=False, type=bool,
                     help="Download a model pretrained on the ImageNet dataset (Default: False)"
