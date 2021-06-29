@@ -19,6 +19,7 @@ from models.mobilenetv2 import MobileNetV2Triplet
 from models.resnet import (
     Resnet18Triplet,
     Resnet18EBPTriplet,
+    Resnet18CBAMEBPTriplet,
     Resnet34Triplet,
     Resnet50Triplet,
     Resnet101Triplet,
@@ -106,6 +107,11 @@ def set_model_architecture(model_architecture, pretrained, embedding_dimension):
         )
     elif model_architecture == "resnet18ebp":
         model = Resnet18EBPTriplet(
+            embedding_dimension=embedding_dimension,
+            pretrained=pretrained
+        )
+    elif model_architecture == "resnet18cbamebp":
+        model = Resnet18CBAMEBPTriplet(
             embedding_dimension=embedding_dimension,
             pretrained=pretrained
         )
