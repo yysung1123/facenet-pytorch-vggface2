@@ -320,7 +320,6 @@ class AttentionAndNormalize(object):
 
     def __call__(self, imgs):
         imgs, att_channel = imgs[:3, :, :], imgs[3:, :, :]
-        att_channel /= 255.0
         imgs = torch.cat((imgs, imgs * att_channel), dim=0)
         return self.normalize(imgs)
 
