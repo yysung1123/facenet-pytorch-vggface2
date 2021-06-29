@@ -257,7 +257,6 @@ def ExternalSourcePipeline(batch_size, num_threads, device_id, external_data, im
     def _pipe(images, ebp_images, image_size):
         images = fn.resize(images, resize_x=image_size, resize_y=image_size)
         ebp_images = fn.resize(ebp_images, resize_x=image_size, resize_y=image_size)
-        ebp_images = fn.cast(ebp_images / 255.0 * images, dtype=types.UINT8)
         images = fn.cat(images, ebp_images, axis=2)
 
         images = fn.flip(images)
@@ -265,8 +264,8 @@ def ExternalSourcePipeline(batch_size, num_threads, device_id, external_data, im
         output = fn.crop_mirror_normalize(images,
                                           dtype=types.FLOAT,
                                           output_layout="CHW",
-                                          mean=[0.6068 * 255, 0.4517 * 255, 0.3800 * 255, 0.6068 * 255, 0.4517 * 255, 0.3800 * 255],
-                                          std=[0.2492 * 255, 0.2173 * 255, 0.2082 * 255, 0.2492 * 255, 0.2173 * 255, 0.2082 * 255])
+                                          mean=[0.6068 * 255, 0.4517 * 255, 0.3800 * 255, 0, 0, 0],
+                                          std=[0.2492 * 255, 0.2173 * 255, 0.2082 * 255, 255, 255, 255])
         return output
 
     pipe = Pipeline(batch_size, num_threads, device_id)
