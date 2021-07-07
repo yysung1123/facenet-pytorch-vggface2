@@ -322,11 +322,12 @@ def distribute_models(avg_model, models):
 
 class AttentionAndNormalize(object):
     def __init__(self, mean, std):
-        self.normalize = transforms.Normalize(mean=[*mean, *mean], std=[*std, *std])
+        self.normalize = transforms.Normalize(mean=mean, std=std)
 
     def __call__(self, imgs):
         imgs, att_channel = imgs[:3, :, :], imgs[3:, :, :]
-        imgs = torch.cat((imgs, imgs * att_channel), dim=0)
+        att_channel = att_channel.repeat(3, 1, 1)
+        imgs = torch.cat((imgs, att_channel), dim=0)
         return self.normalize(imgs)
 
 
@@ -385,8 +386,8 @@ def main():
         transforms.Resize(size=image_size),
         transforms.ToTensor(),
         AttentionAndNormalize(
-            mean=[0.6068, 0.4517, 0.3800],
-            std=[0.2492, 0.2173, 0.2082]
+            mean=[0.6068, 0.4517, 0.3800, 0, 0, 0],
+            std=[0.2492, 0.2173, 0.2082, 1, 1, 1]
         )
     ])
 
