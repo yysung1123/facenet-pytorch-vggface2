@@ -25,6 +25,11 @@ from models.resnet import (
     Resnet101Triplet,
     Resnet152Triplet
 )
+from models.psresnet import (
+    PSResnet18_21111_CBAMTriplet,
+    PSResnet18_22111_CBAMTriplet,
+    PSResnet18_22211_CBAMTriplet
+)
 from random import shuffle
 import random
 
@@ -54,8 +59,8 @@ parser.add_argument('--clients', default=10, type=int,
 parser.add_argument('--iterations_per_epoch', default=10000, type=int,
                     help="Number of training iterations per epoch (default: 10000)"
                     )
-parser.add_argument('--model_architecture', type=str, default="resnet18", choices=["resnet18", "resnet18ebp", "resnet18cbamebp", "resnet34", "resnet50", "resnet101", "resnet152", "inceptionresnetv2", "mobilenetv2"],
-                    help="The required model architecture for training: ('resnet18', 'resnet18ebp', 'resnet18cbamebp', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'inceptionresnetv2', 'mobilenetv2'), (default: 'resnet18')"
+parser.add_argument('--model_architecture', type=str, default="resnet18", choices=["resnet18", "resnet18ebp", "resnet18cbamebp", "resnet34", "resnet50", "resnet101", "resnet152", "inceptionresnetv2", "mobilenetv2", "psresnet18_21111_cbam", "psresnet18_22111_cbam", "psresnet18_22211_cbam"],
+                    help="The required model architecture for training: ('resnet18', 'resnet18ebp', 'resnet18cbamebp', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'inceptionresnetv2', 'mobilenetv2', 'psresnet18_21111_cbam', 'psresnet18_22111_cbam', 'psresnet18_22211_cbam'), (default: 'resnet18')"
                     )
 parser.add_argument('--pretrained', default=False, type=bool,
                     help="Download a model pretrained on the ImageNet dataset (Default: False)"
@@ -142,6 +147,21 @@ def set_model_architecture(model_architecture, pretrained, embedding_dimension):
         )
     elif model_architecture == "mobilenetv2":
         model = MobileNetV2Triplet(
+            embedding_dimension=embedding_dimension,
+            pretrained=pretrained
+        )
+    elif model_architecture == "psresnet18_21111_cbam":
+        model = PSResnet18_21111_CBAMTriplet(
+            embedding_dimension=embedding_dimension,
+            pretrained=pretrained
+        )
+    elif model_architecture == "psresnet18_22111_cbam":
+        model = PSResnet18_22111_CBAMTriplet(
+            embedding_dimension=embedding_dimension,
+            pretrained=pretrained
+        )
+    elif model_architecture == "psresnet18_22211_cbam":
+        model = PSResnet18_22211_CBAMTriplet(
             embedding_dimension=embedding_dimension,
             pretrained=pretrained
         )
