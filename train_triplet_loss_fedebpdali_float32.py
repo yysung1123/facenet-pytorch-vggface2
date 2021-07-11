@@ -533,20 +533,20 @@ def main():
                     # Semi-Hard Negative triplet selection
                     #  (negative_distance - positive_distance < margin) AND (positive_distance < negative_distance)
                     #   Based on: https://github.com/davidsandberg/facenet/blob/master/src/train_tripletloss.py#L295
-                    first_condition = (neg_dists - pos_dists < margin).cpu().numpy().flatten()
-                    second_condition = (pos_dists < neg_dists).cpu().numpy().flatten()
-                    all = (np.logical_and(first_condition, second_condition))
-                    valid_triplets = np.where(all == 1)
+                    first_condition = (neg_dists - pos_dists < margin)
+                    second_condition = (pos_dists < neg_dists)
+                    all = torch.logical_and(first_condition, second_condition)
+                    valid_triplets = torch.where(all == True)[0]
                 else:
                     # Hard Negative triplet selection
                     #  (negative_distance - positive_distance < margin)
                     #   Based on: https://github.com/davidsandberg/facenet/blob/master/src/train_tripletloss.py#L296
-                    all = (neg_dists - pos_dists < margin).cpu().numpy().flatten()
-                    valid_triplets = np.where(all == 1)
+                    all = (neg_dists - pos_dists < margin)
+                    valid_triplets = torch.where(all == True)[0]
 
-                anc_valid_embeddings = anc_embeddings[valid_triplets]
-                pos_valid_embeddings = pos_embeddings[valid_triplets]
-                neg_valid_embeddings = neg_embeddings[valid_triplets]
+                anc_valid_embeddings = torch.index_select(anc_embeddings, 0, valid_triplets)
+                pos_valid_embeddings = torch.index_select(pos_embeddings, 0, valid_triplets)
+                neg_valid_embeddings = torch.index_select(neg_embeddings, 0, valid_triplets)
 
                 # Calculate triplet loss
                 triplet_loss = TripletLoss(margin=margin).forward(
